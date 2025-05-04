@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assign Warehouse to Delivery</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            padding: 20px;
+        }
+
+        /* Header */
+        h2 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        /* Form Styling */
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            max-width: 500px;
+            margin: auto;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        /* Dropdown Styling */
+        select {
+            width: 100%;
+            font-size: 16px;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f1f1f1;
+        }
+
+        /* Checkbox List */
+        .checkbox-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            margin-left: auto; /* Move checkbox to the right of the container */
+        }
+
+        /* Button Styling */
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Messages */
+        .messages {
+            list-style-type: none;
+            margin-bottom: 20px;
+        }
+
+        .messages li {
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .messages .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <h2>Assign Warehouse to Delivery</h2>
+    <form method="POST" action="{% url 'assign_warehouse_to_delivery' %}">
+        {% csrf_token %}
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <label for="transport_id">Select Transport:</label>
+        <select name="transport_id" id="transport_id">
+            {% for transport in transports %}
+                <option value="{{ transport.transport_id }}">{{ transport.number_plate }} - {{ transport.driver_name }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="warehouse_name">Select Warehouse:</label>
+        <select name="warehouse_name" id="warehouse_name">
+            {% for warehouse in warehouses %}
+                <option value="{{ warehouse.warehouse_name }}">{{ warehouse.warehouse_name }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="package_ids">Select Packages:</label>
+        <div class="checkbox-container">
+            {% for package in packages %}
+                <input type="checkbox" name="package_ids" value="{{ package.package_id }}" id="{{ package.package_id }}">
+                <label for="{{ package.package_id }}">ID: {{ package.package_id }}     Weight: {{ package.weight }} kg  Delivery Location: {{ package.delivery_location }}</label>
+            {% endfor %}
+        </div>
+
+        <button type="submit">Assign Packages</button>
+    </form>
+</body>
+</html>

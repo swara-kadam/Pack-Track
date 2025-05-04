@@ -1,0 +1,103 @@
+.package-table {
+    overflow-x: auto;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.package-table th, .package-table td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.package-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.package-table th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.package-table .fragile {
+    background-color: #ffcccc;
+}
+
+.package-table .bulk {
+    background-color: #cfcfcf;
+}
+
+.package-table .priority {
+    background-color: #ffcc00;
+}
+
+.package-table .perishable {
+    background-color: #ff9999;
+}
+
+.package-table .live {
+    background-color: #99ff99;
+}
+
+.package-table .expand-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.package-table td.priority {
+    background-color: #ffcc00;
+}
+
+.package-table td.live {
+    background-color: #99ff99;
+}
+
+.package-table td.fragile {
+    background-color: #ffcccc;
+}
+
+.package-table td.bulk {
+    background-color: #cfcfcf;
+}
+
+.package-table td.perishable {
+    background-color: #ff9999;
+}
+
+
+.new-package-form {
+    border-top: 3px;
+    padding: 20px;
+    text-align: center;
+    width: 40%; /* Adjust the width as needed */
+    margin: 0 auto;
+}
+
+.new-package-form h2 {
+    color: white;
+    background-color: #59ca5c;
+    padding: 10px;
+    margin: 0;
+}
+
+.new-package-form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.new-package-form input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+}
+
+.new-package-form button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}

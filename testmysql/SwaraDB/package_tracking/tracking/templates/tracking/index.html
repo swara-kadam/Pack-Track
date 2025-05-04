@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to PackTrack!</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            text-align: center; /* Center align text */
+            padding: 50px;
+        }
+
+        /* Header */
+        h1 {
+            color: #4CAF50; /* Green color */
+            margin-bottom: 30px; /* Space below the heading */
+        }
+
+        /* Button Styles */
+        .login-button {
+            background-color: #4CAF50; /* Green background */
+            color: white; /* White text */
+            padding: 15px 30px; /* Button padding */
+            border: none; /* No border */
+            border-radius: 5px; /* Rounded corners */
+            font-size: 18px; /* Font size */
+            cursor: pointer; /* Pointer cursor on hover */
+            text-decoration: none; /* No underline for links */
+            display: inline-block; /* Display as inline-block for spacing */
+            margin: 10px; /* Space between buttons */
+            transition: background-color 0.3s; /* Smooth transition */
+        }
+
+        .login-button:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+
+        /* Team Member Section */
+        .team-section {
+            margin-top: 50px; /* Space above the team section */
+            padding: 20px; /* Padding for the team section */
+            border: 1px solid #ccc; /* Light border */
+            border-radius: 5px; /* Rounded corners */
+            background-color: #fff; /* White background for contrast */
+            display: inline-block; /* Center block */
+        }
+
+        .team-member {
+            margin: 10px 0; /* Space between team members */
+            font-size: 16px; /* Font size for team members */
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to PackTrack!</h1>
+
+    <div>
+        <a href="{% url 'admin_login' %}" class="login-button">Admin Login</a>
+        <a href="{% url 'customer_login' %}" class="login-button">Customer Login</a>
+        <a href="{% url 'transport_login' %}" class="login-button">Transport Login</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+/* Table Styles */
+.scrollable-table {
+    overflow-x: auto;
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto; /* Center the table */
+}
+
+.scrollable-table th, .scrollable-table td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.scrollable-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.scrollable-table th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.scrollable-table td {
+    padding: 8px;
+}
+
+.scrollable-table button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}

@@ -1,0 +1,57 @@
+/* admin_dashboard.css */
+
+/* Basic styles for tabs */
+.tabs {
+    display: flex;
+    cursor: pointer;
+}
+
+.tab {
+    flex: 1;
+    padding: 15px;
+    text-align: center;
+    background-color: #4CAF50; /* Updated background color */
+    color: white; /* Updated text color */
+    border: 1px solid #ccc;
+    transition: background-color 0.3s; /* Add transition for hover effect */
+}
+
+.tab:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+.tab.active {
+    background-color: white; /* Keep the active tab white */
+    color: #4CAF50; /* Change active text color to match tab */
+    border-bottom: none;
+}
+
+.tab-content {
+    display: none;
+    border: 1px solid #ccc;
+    padding: 20px;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.scrollable-table {
+    overflow-x: auto;
+    margin-top: 20px;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.scrollable-table th, .scrollable-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.scrollable-table th {
+    background-color: #f2f2f2;
+}
+
+.btn {
+    margin-top: 20px;
+}

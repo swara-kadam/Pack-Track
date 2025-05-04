@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'tracking/css/admin_dashboard.css' %}">
+    <style>
+        /* Basic styles for tabs */
+        body {
+            font-family: Arial, sans-serif; /* Added a font for better readability */
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            color: #4CAF50; /* Heading color */
+        }
+
+        .tabs {
+            display: flex;
+            cursor: pointer;
+            padding: 10px;
+            background-color: #4CAF50; /* Tab background color */
+            border-radius: 5px 5px 0 0; /* Rounded top corners */
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            color: white; /* Text color for tabs */
+            background-color: transparent; /* Make tabs transparent */
+            border: none; /* Remove borders */
+        }
+
+        .tab:hover {
+            background-color: #45a049; /* Darker shade on hover */
+        }
+
+        .tab.active {
+            background-color: white; /* Active tab background color */
+            color: #4CAF50; /* Active tab text color */
+            border: 1px solid #4CAF50; /* Border for active tab */
+            border-bottom: none; /* Remove bottom border to connect with content */
+            border-radius: 5px 5px 0 0; /* Match rounded corners with tabs */
+        }
+
+        .tab-content {
+            display: none;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 0 0 5px 5px; /* Rounded bottom corners */
+            background-color: white; /* Content background color */
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .scrollable-table {
+            overflow-x: auto;
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .scrollable-table th, .scrollable-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        .scrollable-table th {
+            background-color: #4CAF50;
+        }
+
+        .btn {
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #4CAF50; /* Button background color */
+            color: white; /* Button text color */
+            border: none;
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+        }
+
+        .btn a {
+            color: white; /* Link color */
+            text-decoration: none; /* Remove underline from links */
+        }
+
+        .btn:hover {
+            background-color: #45a049; /* Darker shade on hover */
+        }
+    </style>
+    <script>
+        function showTab(tabId) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            contents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            document.getElementById(tabId).classList.add('active');
+            document.querySelector(`.tab[onclick="showTab('${tabId}')"]`).classList.add('active');
+        }
+    </script>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+    
+    <div class="tabs">
+        <div class="tab active" onclick="showTab('generalLog')">General Log</div>
+        <div class="tab" onclick="showTab('detailedPackageView')">Detailed Package View</div>
+        <div class="tab" onclick="showTab('detailedRouteView')">Detailed Route View</div>
+    </div>
+
+    <div id="generalLog" class="tab-content active">
+        <h2>All Customers</h2>
+        <table class="scrollable-table">
+            <thead>
+                <tr>
+                    <th>Customer ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Address</th>
+                    <th>Phone Number</th>
+                    <th>Email Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.customer_id }}</td>
+                    <td>{{ customer.first_name }}</td>
+                    <td>{{ customer.last_name }}</td>
+                    <td>{{ customer.address }}</td>
+                    <td>{{ customer.phone_number }}</td>
+                    <td>{{ customer.email_address }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>All Packages</h2>
+        <table class="scrollable-table">
+            <thead>
+                <tr>
+                    <th>Package ID</th>
+                    <th>Customer</th>
+                    <th>Type</th>
+                    <th>Weight</th>
+                    <th>Height</th>
+                    <th>Width</th>
+                    <th>Length</th>
+                    <th>Dispatch Location</th>
+                    <th>Delivery Location</th>
+                    <th>Estimated Delivery Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for package in packages %}
+                <tr>
+                    <td>{{ package.package_id }}</td>
+                    <td>{{ package.customer }}</td>
+                    <td>{{ package.get_type_display }}</td>
+                    <td>{{ package.weight }}</td>
+                    <td>{{ package.height }}</td>
+                    <td>{{ package.width }}</td>
+                    <td>{{ package.length }}</td>
+                    <td>{{ package.dispatch_location }}</td>
+                    <td>{{ package.delivery_location }}</td>
+                    <td>{{ package.estimated_delivery_date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>All Transports</h2>
+        <table class="scrollable-table">
+            <thead>
+                <tr>
+                    <th>Transport ID</th>
+                    <th>Vehicle Type</th>
+                    <th>Max Capacity</th>
+                    <th>Number Plate</th>
+                    <th>Driver Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transport in transports %}
+                <tr>
+                    <td>{{ transport.transport_id }}</td>
+                    <td>{{ transport.vehicle_type }}</td>
+                    <td>{{ transport.max_capacity }}</td>
+                    <td>{{ transport.number_plate }}</td>
+                    <td>{{ transport.driver_name }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>All Warehouses</h2>
+        <table class="scrollable-table">
+            <thead>
+                <tr>
+                    <th>Warehouse ID</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for warehouse in warehouses %}
+                <tr>
+                    <td>{{ warehouse.warehouse_id }}</td>
+                    <td>{{ warehouse.warehouse_name }}</td>
+                    <td>{{ warehouse.address }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div id="detailedPackageView" class="tab-content">
+        <h2>All Packages in System</h2>
+        <table class="scrollable-table">
+            <thead>
+                <tr>
+                    <th>Package ID</th>
+                    <th>Customer</th>
+                    <th>Type</th>
+                    <th>Weight</th>
+                    <th>Height</th>
+                    <th>Width</th>
+                    <th>Length</th>
+                    <th>Dispatch Location</th>
+                    <th>Delivery Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for package in packagesinsystem %}
+                <tr>
+                    <td>{{ package.package_id }}</td>
+                    <td>{{ package.customer }}</td>
+                    <td>{{ package.get_type_display }}</td>
+                    <td>{{ package.weight }}</td>
+                    <td>{{ package.height }}</td>
+                    <td>{{ package.width }}</td>
+                    <td>{{ package.length }}</td>
+                    <td>{{ package.dispatch_location }}</td>
+                    <td>{{ package.delivery_location }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Packages in Transit</h2>
+        <table class="scrollable-table">
+            <thead>
+                <tr>
+                    <th>Package ID</th>
+                    <th>Transport</th>
+                    <th>Customer</th>
+                    <th>Type</th>
+                    <th>Weight</th>
+                    <th>Height</th>
+                    <th>Width</th>
+                    <th>Length</th>
+                    <th>Dispatch Location</th>
+                    <th>Delivery Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for package in packagesintransit %}
+                <tr>
+                    <td>{{ package.package_id }}</td>
+                    <td>{{ package.transport }}</td>
+                    <td>{{ package.customer }}</td>
+                    <td>{{ package.get_type_display }}</td>
+                    <td>{{ package.weight }}</td>
+                    <td>{{ package.height }}</td>
+                    <td>{{ package.width }}</td>
+                    <td>{{ package.length }}</td>
+                    <td>{{ package.dispatch_location }}</td>
+                    <td>{{ package.delivery_location }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Damaged or Lost Packages</h2>
+        <table class="scrollable-table">
+            <thead>
+                <tr>
+                    <th>Package ID</th>
+                    <th>Customer</th>
+                    <th>Type</th>
+                    <th>Weight</th>
+                    <th>Height</th>
+                    <th>Width</th>
+                    <th>Length</th>
+                    <th>Dispatch Location</th>
+                    <th>Delivery Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for package in damagedorlost %}
+                <tr>
+                    <td>{{ package.package_id }}</td>
+                    <td>{{ package.customer }}</td>
+                    <td>{{ package.get_type_display }}</td>
+                    <td>{{ package.weight }}</td>
+                    <td>{{ package.height }}</td>
+                    <td>{{ package.width }}</td>
+                    <td>{{ package.length }}</td>
+                    <td>{{ package.dispatch_location }}</td>
+                    <td>{{ package.delivery_location }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h2>Delivered Packages</h2>
+        <table class="scrollable-table">
+            <thead>
+                <tr>
+                    <th>Package ID</th>
+                    <th>Customer</th>
+                    <th>Type</th>
+                    <th>Weight</th>
+                    <th>Height</th>
+                    <th>Width</th>
+                    <th>Length</th>
+                    <th>Dispatch Location</th>
+                    <th>Delivery Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for package in deliveredpackages %}
+                <tr>
+                    <td>{{ package.package_id }}</td>
+                    <td>{{ package.customer }}</td>
+                    <td>{{ package.get_type_display }}</td>
+                    <td>{{ package.weight }}</td>
+                    <td>{{ package.height }}</td>
+                    <td>{{ package.width }}</td>
+                    <td>{{ package.length }}</td>
+                    <td>{{ package.dispatch_location }}</td>
+                    <td>{{ package.delivery_location }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div id="detailedRouteView" class="tab-content">
+        <h2>All Routes</h2>
+        <table class="scrollable-table">
+            <thead>
+                <tr>
+                    <th>Route ID</th>
+                    <th>Transport</th>
+                    <th>Start Location</th>
+                    <th>End Location</th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for route in routes %}
+                <tr>
+                    <td>{{ route.route_id }}</td>
+                    <td>{{ route.transport }}</td>
+                    <td>{{ route.start_location }}</td>
+                    <td>{{ route.end_location }}</td>
+                    <td>{{ route.get_type_display }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Package Statuses</h2>
+        <table class="scrollable-table">
+            <thead>
+                <tr>
+                    <th>Status ID</th>
+                    <th>Package</th>
+                    <th>Status Date</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for status in packagestatus %}
+                <tr>
+                    <td>{{ status.id }}</td>
+                    <td>{{ status.package }}</td>
+                    <td>{{ status.status_date }}</td>
+                    <td>{{ status.location }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Available Transports</h2>
+        <table class="scrollable-table">
+            <thead>
+                <tr>
+                    <th>Transport ID</th>
+                    <th>Vehicle Type</th>
+                    <th>Max Capacity</th>
+                    <th>Number Plate</th>
+                    <th>Driver Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transport in available_transports %}
+                <tr>
+                    <td>{{ transport.transport_id }}</td>
+                    <td>{{ transport.vehicle_type }}</td>
+                    <td>{{ transport.max_capacity }}</td>
+                    <td>{{ transport.number_plate }}</td>
+                    <td>{{ transport.driver_name }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>In Transit Transports</h2>
+        <table class="scrollable-table">
+            <thead>
+                <tr>
+                    <th>Transport ID</th>
+                    <th>Vehicle Type</th>
+                    <th>Max Capacity</th>
+                    <th>Number Plate</th>
+                    <th>Driver Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transport in intransit_transports %}
+                <tr>
+                    <td>{{ transport.transport_id }}</td>
+                    <td>{{ transport.vehicle_type }}</td>
+                    <td>{{ transport.max_capacity }}</td>
+                    <td>{{ transport.number_plate }}</td>
+                    <td>{{ transport.driver_name }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <button class="btn"><a href="{% url 'assign_route' %}">Assign Route to Transport</a></button>
+
+
+
+    <h2>Register New Transport</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="vehicle_type">Vehicle Type:</label>
+            <input type="text" name="vehicle_type" required>
+        </div>
+        <div class="form-group">
+            <label for="max_capacity">Max Capacity:</label>
+            <input type="text" name="max_capacity" required>
+        </div>
+        <div class="form-group">
+            <label for="number_plate">Number Plate:</label>
+            <input type="text" name="number_plate" required>
+        </div>
+        <div class="form-group">
+            <label for="driver_name">Driver Name:</label>
+            <input type="text" name="driver_name" required>
+        </div>
+        <button type="submit" class="btn">Register</button>
+    </form>
+
+</body>
+</html>

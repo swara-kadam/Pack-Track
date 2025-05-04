@@ -1,0 +1,22 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+h1, h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Dashboard Styles */
+ul {
+    list-style-type: none;
+    padding: 10;
+}
+
+li {
+    margin-bottom: 10px;
+}

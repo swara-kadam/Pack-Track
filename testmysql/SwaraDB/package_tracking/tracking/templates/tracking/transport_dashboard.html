@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transport Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'tracking/css/transport_dashboard.css' %}">
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            padding: 20px;
+        }
+
+        /* Header */
+        h2, h3 {
+            color: #4CAF50;
+            margin-top: 20px;
+        }
+
+        /* Assigned Route Section */
+        .route-details, .assigned-packages {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+
+        .route-details p, .assigned-packages p {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        /* Package List */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            background-color: #e7f4e8;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        /* Label and Select Styling */
+        label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        select {
+            padding: 5px;
+            font-size: 1em;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        /* Button Styling */
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h2>Transport Dashboard</h2>
+    
+    <div class="route-details">
+        <h3>Route Details</h3>
+        {% if assigned_route %}
+            <p><strong>Assigned Route:</strong></p>
+            <p><strong>Start Location:</strong> {{ assigned_route.start_location }}</p>
+            <p><strong>End Location:</strong> {{ assigned_route.end_location }}</p>
+        {% else %}
+            <p>No route assigned yet.</p>
+        {% endif %}
+    </div>
+
+    <div class="assigned-packages">
+        <h3>Assigned Packages</h3>
+        {% if assigned_packages %}
+        <form method="POST" action="{% url 'complete_route' assigned_route.route_id %}">
+                {% csrf_token %}
+                <ul>
+                    {% for package in assigned_packages %}
+                        <li>
+                            <p><strong>Package ID:</strong> {{ package.package_id }}</p>
+                            <p><strong>Dispatch Location:</strong> {{ package.dispatch_location }}</p>
+                            <p><strong>Delivery Location:</strong> {{ package.delivery_location }}</p>
+                            <label for="status_{{ package.package_id }}">Status:</label>
+                            <select name="package_{{ package.package_id }}_status" id="status_{{ package.package_id }}">
+                                <option value="delivered_to_warehouse">Delivered to Warehouse</option>
+                                <option value="damaged">Damaged</option>
+                                <option value="lost">Lost</option>
+                                <option value="delivered_to_final_location">Delivered to Final Location</option>
+                            </select>
+                        </li>
+                    {% endfor %}
+                </ul>
+                
+                <input type="hidden" name="transport_id" value="{{ transport.transport_id }}">
+                <button type="submit">Complete Route</button>
+            </form>
+        {% else %}
+            <p>No packages assigned for this route.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

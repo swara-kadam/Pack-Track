@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Packages</title>
+</head>
+<body>
+    <h1>Here is the list of Packages</h1>
+    {% if package %}
+        <table>
+            <tr>
+                <th>Customer ID</th>
+                <th>Type</th>
+                <th>Weight</th>
+                <th>Height</th>
+                <th>Width</th>
+                <th>Length</th>
+                <th>Dispatch Location</th>
+                <th>Delivery Location</th>
+            </tr>
+            {% for packages in package %}
+                <tr>
+                    <td>{{ packages.customer}}</td> 
+                    <td>{{ packages.type }}</td>
+                    <td>{{ packages.weight }}</td>
+                    <td>{{ packages.height }}</td>
+                    <td>{{ packages.width }}</td>
+                    <td>{{ packages.length }}</td>
+                    <td>{{ packages.dispatch_location }}</td>
+                    <td>{{ packages.delivery_location }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No packages available.</p>
+    {% endif %}
+
+
+</body>
+</html>

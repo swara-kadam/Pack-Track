@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Signup</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'customer_signup.css' %}">
+</head>
+<body>
+    <div class="scrollable-table">
+        <h1>Customer Signup</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <tr>
+                <th>Username:</th>
+                <td><input type="text" name="username" required></td>
+            </tr>
+            <tr>
+                <th>Password:</th>
+                <td><input type="password" name="password" required></td>
+            </tr>
+            <tr>
+                <th>First Name:</th>
+                <td><input type="text" name="first_name" required></td>
+            </tr>
+            <tr>
+                <th>Last Name:</th>
+                <td><input type="text" name="last_name" required></td>
+            </tr>
+            <tr>
+                <th>Address:</th>
+                <td><textarea name="address" required></textarea></td>
+            </tr>
+            <tr>
+                <th>Phone Number:</th>
+                <td><input type="text" name="phone_number" required></td>
+            </tr>
+            <tr>
+                <th>Email Address:</th>
+                <td><input type="email" name="email_address" required></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="submit">Signup</button></td>
+            </tr>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assign Package to Transport</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'tracking/css/assign_package.css' %}">
+</head>
+<body>
+    <div class="container {% if messages %} {% for message in messages %} {{ message.tags }} {% endfor %} {% endif %}">
+        <h2 class="header">Assign Package to Transport</h2>
+        <form method="POST" action="{% url 'assign_package' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="package_id">Package ID:</label>
+                <input type="text" name="package_id" required>
+            </div>
+            <div class="form-group">
+                <label for="transport_id">Transport ID:</label>
+                <input type="text" name="transport_id" required>
+            </div>
+            <div class="form-group">
+                <label for="location">Location:</label>
+                <input type="text" name="location" required>
+            </div>
+            <div class="form-group">
+                <label for="assignment_date">Date:</label>
+                <input type="date" name="assignment_date" required>
+            </div>
+            <button type="submit" class="btn">Assign</button>
+        </form>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+       
+    <div class="dashboard-btn-container">
+        <a href="{% url 'admin_dashboard' %}" class="dashboard-btn">Return to Dashboard</a>
+    </div>
+</body>
+</html>
